@@ -1,6 +1,6 @@
 <?php
 /**
-* API Helper Class
+* APIHelper Class
 *
 * @version 1.0
 */
@@ -19,11 +19,17 @@ class APIHelper {
 	* @param array $headers Headers 
 	* @return string 
 	*/
-	public static function request($url, $method='GET', $bodyData=null, $headers=null) {
+	public static function request($url, $method, $bodyData=null, $headers=null) {
+		// default error values
+		$error = 'URL is empty';
+		$httpStatus = 500;
+		$result = 'URL is empty';
+
 		if(!empty($url)) { 
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // for ssl
 
 			if(!empty($bodyData)) { 
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $bodyData);
@@ -36,11 +42,15 @@ class APIHelper {
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
 			$result = curl_exec($curl);
-			curl_close($curl);
+			$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-			return $result;
+			if(curl_error($curl)) {
+				$error = curl_error($curl);
+			}
+
+			curl_close($curl);
 		}
-		return false; // check return type ?
+		return array('response'=>$result,'error'=>$error,'status'=>$httpStatus);
 	}
 }
 
