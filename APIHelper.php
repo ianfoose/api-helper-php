@@ -23,9 +23,9 @@ class APIHelper {
 		// default error values
 		$error = 'URL is empty';
 		$httpStatus = 500;
-		$result = 'URL is empty';
+		$result = '';
 
-		if(!empty($url)) { 
+		if(!empty($url) && !empty($method)) { 
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
@@ -50,8 +50,11 @@ class APIHelper {
 
 			curl_close($curl);
 		}
+
+		if(empty($method)) {
+			$error = 'Method is empty';
+		}
 		return array('response'=>$result,'error'=>$error,'status'=>$httpStatus);
 	}
 }
-
 ?>
