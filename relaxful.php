@@ -1,10 +1,10 @@
 <?php
 /**
-* APIHelper Class
+* Relaxful Class
 *
 * @version 1.0
 */
-class APIHelper {
+class Relaxful {
 	/**
 	* Constructor
 	*/
