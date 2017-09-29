@@ -1,11 +1,13 @@
-# APIHelper PHP
+# Relaxful
+
+A PHP API client.
 
 ## Use
 
 ### Simple Request
 
 ```php
-$result = APIHelper::request($url, 'GET');
+$result = Relaxful::request($url, 'GET');
 
 if(empty($result['error'])) {
   if($result['status'] == 200) {
@@ -21,11 +23,11 @@ if(empty($result['error'])) {
 ### POST Request
 
 ```php
-APIHelper::request($url, 'POST', array('key'=>'value'));
+Relaxful::request($url, 'POST', array('key'=>'value'));
 ```
 
 ### Headers
 
 ```php
-APIHelper::request($url, 'GET', null, array('Content-Type'=>'text/html');
+Relaxful::request($url, 'GET', null, array('Content-Type'=>'text/html');
 ```
