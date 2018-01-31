@@ -44,10 +44,17 @@ class Relaxful {
 			$result = curl_exec($curl);
 			$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
+			// error checking
+
 			if(curl_error($curl)) {
 				throw new Exception(curl_error($curl));
 			}
 
+			if($httpStatus != 200 || $httpStatus != 304) {
+				throw new Exception('HTTP Error '.$httpStatus);
+			}
+
+			// cleanup
 			curl_close($curl);
 		}
 
