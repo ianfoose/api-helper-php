@@ -45,16 +45,16 @@ class Relaxful {
 			$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 			if(curl_error($curl)) {
-				$error = curl_error($curl);
+				throw new Exception(curl_error($curl));
 			}
 
 			curl_close($curl);
 		}
 
 		if(empty($method)) {
-			$error = 'Method is empty';
+			throw new Exception('Method is empty');
 		}
-		return array('response'=>$result,'error'=>$error,'status'=>$httpStatus);
+		return array('response'=>$result,'status'=>$httpStatus);
 	}
 }
 ?>
