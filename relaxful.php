@@ -36,7 +36,7 @@ class Relaxful {
 			} 
 
 			if(!empty($headers)) {
-				curl_setopt($curl, CURLOPT_HEADERS, $headers); // check opt type
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $headers); // check opt type
 			}
 		
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -46,12 +46,12 @@ class Relaxful {
 
 			// error checking
 
-			if(curl_error($curl)) {
-				throw new Exception(curl_error($curl));
+			if($httpStatus != 200 && $httpStatus != 304) {
+				throw new Exception('HTTP Error '.$httpStatus);
 			}
 
-			if($httpStatus != 200 || $httpStatus != 304) {
-				throw new Exception('HTTP Error '.$httpStatus);
+			if(curl_error($curl)) {
+				throw new Exception(curl_error($curl));
 			}
 
 			// cleanup
